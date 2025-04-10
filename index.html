@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: rgb(130, 218, 218);
+            padding: 20px;
+        }
+        h2{
+            color:white;
+        }
+        .question{
+            background-color: aquamarine;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            margin-top: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .question label {
+             display: block;
+             border: 2px solid #008080;
+             border-radius: 10px;
+             padding: 10px;
+             margin-bottom: 10px;
+             cursor: pointer;
+             background-color: white;
+             transition: all 0.2s ease-in-out;
+        }
+
+        .question label:hover {
+             background-color: #e0f7f7;
+        }
+
+        .question input[type="radio"] {
+              display: none; /* Cache le bouton radio */
+        }
+
+        .question input[type="radio"]:checked + span {
+            background-color: #00b3b3;
+            color: rgb(12, 12, 12);
+            /* border-color: #007777; */
+        }
+        label.correct {
+             /* border: 2px solid green;
+             color: green;
+             font-weight: bold; */
+             background-color: #d4edda;
+             border-color: green;
+             color: green;
+             text-align: center;
+        }
+
+        label.incorrect {
+             /* border: 2px solid red;
+             color: red;
+             font-weight: bold; */
+             background-color: #f8d7da;
+             border-color: red;
+             color: red;
+             text-align: center;
+        }
+         
+
+    </style>
+</head>
+<body>
+   <h2>Quiz Biblique</h2>  
+   <form id="quizForm">
+        <div id="quizContainer"></div>
+        <!-- <button id="next-btn" onclick="nextQuestion()">Suivant</button> -->
+        <button type="button" id="next-btn">Suivant</button>
+        <button type="submit" id="submit-btn" style="display:none;" >Vérifier les réponses</button>
+   </form>    
+   <div class="résult" id="score"></div>
+
+   <script>
+     const questions = [
+         {
+             question: "Qui a construit l'arche pour survivre au déluge?",
+             options: ["Moïse", "Abraham", "Noé", "David"],
+             answer: "Noé"
+         },
+         {
+            question: "Combien de jours Dieu a-t-il créer le monde?",
+            options: ["10 jours", "6 jours", "7 jours" , "3 jours"],
+            answer: "6 jours"
+         },
+         {
+            question: "Quel apôtre a renié Jésus trois fois?",
+             options: ["Thomas","Pierre", "Jean", "Paul"],
+            answer: "Pierre"
+         },
+         {
+             question: "Quand la ville était sur le point d'être détruite, que portaient les anciens de Jérusalem?",
+             options: ["Toile à sac", "Robe de lin", "Pantalon en cuir"],
+             answer: "Toile à sac"
+         }, 
+        {
+             question: "Lequel des apôtres de Jésus l'a trahi?",
+             options: ["Pierre", "Judas Iscariot", "Jean"],
+             answer: "Judas Iscariot"
+        },
+        {
+             question: "Dans quel livre trouve-t-on l' histoire d'Adam et Eve?",
+             options: ["Lèvitique","Nombre", "Genèse", "Exode"],
+             answer: "Genèse"
+         },
+        {
+             question: "Combien de jours Jésus a-t-il passé dans le désert?",
+             options: ["20 jours", "30 jours" ,"40 jours", "50 jours"],
+             answer: "40 jours"
+         },
+        {
+             question: "Quel disciple était surnommé le disciple que Jésus aimait?",
+             options: ["Pierre", "Thomas" ,"Jean", "André"],
+             answer: "Jean"
+        },
+        {
+             question: "Quel est le fruit défendu dans le jardin l' Eden?",
+             options: [ "Pomme","Figue", "Raisin", "La Bible ne precise pas"],
+            answer: "La Bible ne precise pas"
+        },
+         {
+             question: "Quelle femme est devenue reine en sauvant son peuple?",
+             options: ["Marie", "Ruth" , "Esther", "Déborah"],
+             answer: "Esther"
+         }
+    ];
+
+    let currentQuestionIndex = 0;
+    let userAnswers = [];   
+
+    const quizContainer = document.getElementById('quizContainer');
+    const nextBtn = document.getElementById('next-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const form = document.getElementById('quizForm');
+    const scoreDisplay = document.getElementById('score');
+
+
+    function showQuestion(index) {
+            quizContainer.innerHTML = ''; // Nettoie le conteneur
+
+            const q = questions[index];
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('question');
+
+            const questionTitle = document.createElement('p');
+            questionTitle.textContent = `${index + 1}. ${q.question}`;
+            questionDiv.appendChild(questionTitle);
+
+            q.options.forEach(option => {
+                const label = document.createElement('label');
+                label.innerHTML = `
+                    <input type="radio" name="question${index}" value="${option}">
+                    <span>${option}</span>
+                `;
+                questionDiv.appendChild(label);
+                // questionDiv.appendChild(document.createElement('br'));
+            });
+
+            quizContainer.appendChild(questionDiv);
+        }
+
+        nextBtn.addEventListener('click', () => {
+            const selected = document.querySelector(`input[name="question${currentQuestionIndex}"]:checked`);
+            if (!selected) {
+                alert("Veuillez sélectionner une réponse !");
+                return;
+            }
+
+            userAnswers[currentQuestionIndex] = selected.value;
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion(currentQuestionIndex);
+            } else {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            }
+        });
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            let score = 0;
+
+            questions.forEach((q, index) => {
+                if (userAnswers[index] && userAnswers[index].toLowerCase() === q.answer.toLowerCase()) {
+                    score++;
+                }
+            });
+
+            quizContainer.innerHTML = '';
+            submitBtn.style.display = 'none';
+            // scoreDisplay.innerHTML = `<h3>Vous avez obtenu ${score} / ${questions.length} bonnes réponses !</h3>`;
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+
+                const questionTitle = document.createElement('p');
+                questionTitle.textContent = `${index + 1}. ${q.question}`;
+                questionDiv.appendChild(questionTitle);
+
+                 q.options.forEach(option => {
+                    
+                    const label = document.createElement('label');
+                    label.innerHTML = `
+                        <input type="radio" name="result${index}" value="${option}" disabled>
+                        <span>${option}</span>
+                    `;
+
+                    // On met en vert si c'est la bonne réponse
+                    if (option === q.answer) {
+                        label.classList.add('correct');
+                     }
+
+                    // Si l'utilisateur a sélectionné cette réponse et que ce n’est pas la bonne
+                     if (userAnswers[index] === option && option !== q.answer) {
+                         label.classList.add('incorrect');
+                     }
+
+                     questionDiv.appendChild(label);
+              });
+
+              quizContainer.appendChild(questionDiv);
+         });
+
+        scoreDisplay.innerHTML = `<h3>Vous avez obtenu ${score} / ${questions.length} bonnes réponses !</h3>`;
+
+        });
+
+    
+        // Affiche la première question
+        showQuestion (currentQuestionIndex);      
+
+
+
+
+
+// Fonction pour afficher les questions
+
+
+// function showQuiz() {
+//     questions.forEach((q, index) => {
+//         const questionDiv = document.createElement('div');
+//         questionDiv.classList.add('question');
+
+//         const questionTitle = document.createElement('p');
+//         questionTitle.textContent = `${index + 1}. ${q.question}`;
+//         questionDiv.appendChild(questionTitle);
+
+//         q.options.forEach(option => {
+//             const label = document.createElement('label');
+//             label.innerHTML = `
+//              <input type="radio" name="question${index}" value="${option}">
+//                 ${option}
+            
+//             `;
+//             questionDiv.appendChild(label);
+//             questionDiv.appendChild(document.createElement('br'));
+//         });
+
+//         quizContainer.appendChild(questionDiv);
+//     });
+// }
+
+//      // Appel de la fonction pour afficher les questions
+// showQuiz();
+
+//  // Vérification des réponses
+ 
+// form.addEventListener('submit', function(event) {
+//     event.preventDefault(); // Empêche le rechargement de la page
+
+//     let score = 0;
+
+//     questions.forEach((q, index) => {
+//         const selected = document.querySelector(`input[name="question${index}"]:checked`);
+//         if (selected && selected.value.toLowerCase() === q.answer.toLowerCase()) {
+//             score++;
+//         }
+//     });
+
+//     scoreDisplay.innerHTML = `<h3>Vous avez obtenu ${score} / ${questions.length} bonnes réponses !</h3>`;
+// });
+   
+
+        
+ </script>
+</body>
+
+</html>
