@@ -7,16 +7,63 @@
     <style>
         body{
             font-family: Arial, sans-serif;
-            background-color: rgb(130, 218, 218);
+        
+            background:   url(./MagazinePic-01-2.3.001-bigpicture_01_4.jpg);
+    
+            /* background-color: rgb(130, 218, 218); */
             padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+        h1{
+            font-size: 80px;
+            width: 80px;
+            overflow: hidden;
+            -webkit-font--smoothing: antialiased ;
+        }
+
+        h1{
+           cursor: default;
+           position: absolute;
+           top: 120px;
+           left: 0;
+           right: 0;
+           bottom: 20;
+           width: 100%;
+           height: 100px;
+           margin: auto;
+           display: block;
+           text-align: center;
+        }
+        h1 span{
+            position: relative;
+            top: 20px;
+            display: inline-block;
+            font-size: 80px;
+            color: #fff;
+            text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc,0 4px 0 #ccc,
+            0 5px 0 #ccc,0 6px 0 transparent,0 7px 0 transparent,0 8px0 transparent,
+            0 9px 0 transparent,0 10px 10px rgba(0, 0, 0, 0.4) ;
+            animation: image 0.3s ease infinite alternate;
+        }
+        @keyframes image {
+            100%{
+                top: -20px;
+                text-shadow:  0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
+                0 5px 0 #ccc, 0 6px 0 #ccc, 0 7px 0 #ccc, 0 8px #ccc, 0 9px #ccc,
+                0 50px 25px rgba(0, 0, 0, 0.2);
+            }
         }
         h2{
             color:white;
         }
+        h3{
+            color: #d4edda;
+        }
         .question{
-            background-color: aquamarine;
+            background-color: rgba(127, 255, 212, 0.589);
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 20px;
             margin-bottom: 20px;
         }
         button {
@@ -26,16 +73,33 @@
             margin-top: 10px;
             margin-right: 10px;
             cursor: pointer;
+            border-radius: 20px;
+            background-color: rgb(216, 216, 210);
         }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            /* border-radius: 20px; */
+}
         .question label {
              display: block;
-             border: 2px solid #008080;
+             
+             align-items: center;
+             justify-content: center;
+             /* border: 2px solid #008080; */
+             box-shadow: 5px 5px 5px 2px cyan;
              border-radius: 10px;
-             padding: 10px;
-             margin-bottom: 10px;
+             padding: 5px;
+             margin-bottom: 20px;
              cursor: pointer;
              background-color: white;
-             transition: all 0.2s ease-in-out;
+             padding-left: 15px;
+             /* transition: all 0.2s ease-in-out; */
+             text-align: center;
+             gap: 10px;
+             width: 100%; /* pour bien remplir l’espace */
+             box-sizing: border-box;
         }
 
         .question label:hover {
@@ -48,43 +112,64 @@
 
         .question input[type="radio"]:checked + span {
             background-color: #00b3b3;
-            color: rgb(12, 12, 12);
+            width: 500px;
+            /* color: rgb(12, 12, 12); */
             /* border-color: #007777; */
         }
-        label.correct {
-             /* border: 2px solid green;
-             color: green;
-             font-weight: bold; */
-             background-color: #d4edda;
-             border-color: green;
-             color: green;
-             text-align: center;
+        label.correct span {
+            background-color: #d4edda;
+            color: green;
+            font-weight: bold;
         }
 
-        label.incorrect {
-             /* border: 2px solid red;
-             color: red;
-             font-weight: bold; */
-             background-color: #f8d7da;
-             border-color: red;
-             color: red;
-             text-align: center;
+        label.incorrect span {
+              background-color: #f8d7da;
+              color: red;
+             font-weight: bold;
         }
          
 
     </style>
 </head>
 <body>
+  
+    <div id="start-screen" style="text-align:center; margin-top: 200px;">
+        <h1>
+            <span>Q</span>
+            <span>U</span>
+            <span>I</span>
+            <span>Z</span>
+        </h1>
+        <button id="start-btn">Commencer le quiz</button>
+    </div>
+   
+    <form id="quizForm" style="display: none;">
+
    <h2>Quiz Biblique</h2>  
    <form id="quizForm">
         <div id="quizContainer"></div>
         <!-- <button id="next-btn" onclick="nextQuestion()">Suivant</button> -->
-        <button type="button" id="next-btn">Suivant</button>
-        <button type="submit" id="submit-btn" style="display:none;" >Vérifier les réponses</button>
+        <div class="button-container">
+            <button type="button" id="next-btn">Suivant</button>
+        </div>
+        <div class="button-container" style="display: none;"></div>
+            <button type="submit" id="submit-btn" style="display:none;" >Vérifier les réponses</button>
+        </div> 
    </form>    
    <div class="résult" id="score"></div>
 
    <script>
+    const startScreen = document.getElementById('start-screen');
+    const startBtn = document.getElementById('start-btn');
+
+    // Quand on clique sur "Commencer"
+    startBtn.addEventListener('click', () => {
+        startScreen.style.display = 'none';  // Cache l'écran d'accueil
+        form.style.display = 'block';        // Affiche le quiz
+        showQuestion(currentQuestionIndex);  // Affiche la première question
+    });
+
+
      const questions = [
          {
              question: "Qui a construit l'arche pour survivre au déluge?",
@@ -93,7 +178,7 @@
          },
          {
             question: "Combien de jours Dieu a-t-il créer le monde?",
-            options: ["10 jours", "6 jours", "7 jours" , "3 jours"],
+            options: ["10 jours", "6 jours", " 7 jours" , " 3 jours"],
             answer: "6 jours"
          },
          {
@@ -210,40 +295,39 @@
                 const questionTitle = document.createElement('p');
                 questionTitle.textContent = `${index + 1}. ${q.question}`;
                 questionDiv.appendChild(questionTitle);
+                q.options.forEach(option => {
+        const label = document.createElement('label');
+        label.innerHTML = `
+          <input type="radio" disabled>
+          <span>${option}</span>
+        `;
 
-                 q.options.forEach(option => {
-                    
-                    const label = document.createElement('label');
-                    label.innerHTML = `
-                        <input type="radio" name="result${index}" value="${option}" disabled>
-                        <span>${option}</span>
-                    `;
+        // Style vert si c'est la bonne réponse
+        if (option === q.answer) {
+          label.classList.add('correct');
+        }
 
-                    // On met en vert si c'est la bonne réponse
-                    if (option === q.answer) {
-                        label.classList.add('correct');
-                     }
+        // Style rouge si mauvaise réponse sélectionnée
+        if (userAnswers[index] === option && option !== q.answer) {
+          label.classList.add('incorrect');
+        }
 
-                    // Si l'utilisateur a sélectionné cette réponse et que ce n’est pas la bonne
-                     if (userAnswers[index] === option && option !== q.answer) {
-                         label.classList.add('incorrect');
-                     }
+        questionDiv.appendChild(label);
+      });
 
-                     questionDiv.appendChild(label);
-              });
+      quizContainer.appendChild(questionDiv);
 
-              quizContainer.appendChild(questionDiv);
-         });
+      // Calcul du score
+      if (userAnswers[index] && userAnswers[index].toLowerCase() === q.answer.toLowerCase()) {
+        score++;
+      }
+    });
 
-        scoreDisplay.innerHTML = `<h3>Vous avez obtenu ${score} / ${questions.length} bonnes réponses !</h3>`;
-
-        });
-
-    
-        // Affiche la première question
-        showQuestion (currentQuestionIndex);      
-
-
+    // Affiche le score total
+    scoreDisplay.innerHTML = `<h3>Vous avez obtenu ${score} / ${questions.length} bonnes réponses !</h3>`;
+    submitBtn.style.display = 'none'; // cache le bouton après la correction
+  });
+                
 
 
 
