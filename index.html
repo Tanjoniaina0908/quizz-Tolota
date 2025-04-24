@@ -326,6 +326,10 @@
         let score = 0;
         quizContainer.innerHTML = '';
 
+        // const music =document.getElementById("backgrand-music");
+            //  music.pause();
+      
+      
         questions.forEach((q, index) => {
             const questionDiv = document.createElement('div');
             questionDiv.classList.add('question');
@@ -364,11 +368,12 @@
             }
         });
 
-        scoreDisplay.innerHTML = `<h3>Vous avez obtenu ${score} / ${questions.length} bonnes réponses !</h3>`;
+        scoreDisplay.innerHTML = `<h3>Vous avez obtenu <stronge>${score}</strong> / <stronge>${questions.length}</strong> bonnes réponses !</h3>`;
         submitBtn.style.display = 'none';
         restartBtn.style.display = 'inline-block';
     });
 
+    
     function restartQuiz() {
         currentQuestionIndex = 0;
         userAnswers = [];
