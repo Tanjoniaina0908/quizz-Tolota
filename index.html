@@ -7,6 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            /* background: url(./MagazinePic-01-2.3.001-bigpicture_01_4.jpg); */
             background-color: rgb(115, 214, 221);
             padding: 20px;
             display: flex;
@@ -14,6 +15,8 @@
             align-items: center;
             margin: 0;
             box-sizing: border-box;
+
+            
         }
 
         h1 {
@@ -21,18 +24,19 @@
             text-align: center;
             margin-top: 60px;
             margin-bottom: 30px;
+
         }
 
+                                            
         h1 span {
-            position: relative;
-            display: inline-block;
-            color: #fff;
-            font-size: clamp(32px, 8vw, 80px);
-            text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 0 4px 0 #ccc,
-                         0 5px 0 #ccc, 0 6px 0 transparent, 0 7px 0 transparent,
-                         0 8px 0 transparent, 0 9px 0 transparent,
-                         0 10px 10px rgba(0, 0, 0, 0.4);
-            animation: image 0.6s ease infinite alternate;
+                 position: relative;
+                 display: inline-block;
+                 color: #fff;
+                 font-size: clamp(32px, 8vw, 80px);
+                 text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 0 4px 0 #ccc,
+                               0 5px 0 #ccc, 0 6px 0 transparent, 0 7px 0 transparent, 0 8px 0 transparent,
+                               0 9px 0 transparent, 0 10px 10px rgba(0, 0, 0, 0.4);
+                animation: image 0.6s ease infinite alternate;
         }
 
         @keyframes image {
@@ -45,35 +49,36 @@
             }
         }
 
-        h3 {
+
+         h3{
             color: red;
             text-align: center;
             font-weight: 800;
-        }
-
+         }   
         .circle-btn {
             background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 50%;
-            width: 70px;
+             border: none;
+             border-radius: 50%;
+             width: 70px;
             height: 70px;
-            font-size: 30px;
+            font-size: 30px; 
             color: white;
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             display: flex;
             align-items: center;
-            justify-content: center;
+             justify-content: center;
             backdrop-filter: blur(5px);
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            transition: background-color 0.3s ease;
+             cursor: pointer;
+             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+             transition: background-color 0.3s ease;
         }
 
         .circle-btn:hover {
-            background-color: rgba(255, 255, 255, 0.3);
+               background-color: rgba(255, 255, 255, 0.3);
         }
+
 
         .question {
             background-color: rgba(127, 255, 212, 0.589);
@@ -82,6 +87,7 @@
             margin-bottom: 20px;
             width: 100%;
             max-width: 600px;
+
         }
 
         button {
@@ -99,19 +105,20 @@
             width: 90%;
             max-width: 300px;
             display: block;
+
         }
 
         button:hover {
-            background: linear-gradient(145deg, white, #07c5ff);
-            transform: scale(1.05);
+              background: linear-gradient(145deg, white, #07c5ff);
+              transform: scale(1.05);
         }
 
         .button-container {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
             margin-top: 20px;
             gap: 10px;
+
         }
 
         .question label {
@@ -129,24 +136,27 @@
         }
 
         .question label:hover {
-            background-color: #f1f1f1;
-            transform: scale(1.02);
+               /* background-color: #f1f1f1; */
+               transform: scale(1.02);
         }
+
 
         .question input[type="radio"] {
             display: none;
         }
 
         label.correct {
+            /* background-color: #d4edda; */
             background-color: rgb(0, 128, 0);
+            /* color: green; */
             font-weight: bold;
-            color: white;
         }
 
         label.incorrect {
-            background-color: rgb(255, 0, 0);
+            /* background-color: #f8d7da; */
+            background-color:  rgb(255, 0, 0);
+            /* color: red; */
             font-weight: bold;
-            color: white;
         }
 
         #restart-btn {
@@ -154,7 +164,7 @@
             color: white;
         }
 
-        /* Responsive adjustments */
+                  /* Responsive adjustments */
         @media (max-width: 600px) {
             h1 span {
                 font-size: 50px;
@@ -171,6 +181,8 @@
                 font-size: 24px;
             }
         }
+
+
     </style>
 </head>
 <body>
@@ -237,18 +249,15 @@
         { question: "Quelle femme est devenue reine en sauvant son peuple?", options: ["Marie", "Ruth", "Esther", "Déborah"], answer: "Esther" }
     ];
 
-    let currentQuestionIndex = 0;        // indice de la question actuelle
+    let currentQuestionIndex = 0;
     let userAnswers = [];
 
 
 
     startBtn.addEventListener('click', () => {
         startScreen.style.display = 'none';
-            // cacher l'écran de démarrage
         form.style.display = 'block';
-             // afficher le quiz
         showQuestion(currentQuestionIndex);
-            // afficher la première question
     });
 
     document.getElementById("music-btn").addEventListener("click", () => {
